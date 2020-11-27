@@ -1,4 +1,6 @@
 <%@ page import="java.util.List" %>
+
+<%@ page import="java.net.URLEncoder" %>
 <%@ page import="com.entity.Message" %>
 <%@ page import="com.entity.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -75,7 +77,9 @@
 <div class="wrapper">
     <div class="header">
         <div class="menu">
+            <div><img  src="/msgsys/fileDownload?path=<%=URLEncoder.encode(user.getImgpath(),"UTF-8") %>"/></div>
             <span>当前用户：<%= user.getUsername()%></span><span></span>
+            <p><%=user.getImgpath() %></p>
             <span><a href="#">发送消息</a><a href="logout.jsp">退出</a></span>
         </div>
     </div>

@@ -44,6 +44,7 @@
     <form action="<%=basePath%>user.do" method="post">
         <%--隐藏域--%>
         <input name="action" type="hidden" value="login" />
+
         <div>
             用户名<span class="red">*</span>
             <span><input type="text" name="username" id="username"></span>

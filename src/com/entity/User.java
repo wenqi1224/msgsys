@@ -11,6 +11,7 @@ public class User {
     private String username;
     private String password;
     private String email;
+    private String imgpath;
 
     public User() {
     }
@@ -22,6 +23,7 @@ public class User {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
+                ", imgpath='" + imgpath + '\'' +
                 '}';
     }
 
@@ -41,6 +43,14 @@ public class User {
         this.username = username;
         this.password = password;
         this.email = email;
+    }
+
+    public String getImgpath() {
+        return imgpath;
+    }
+
+    public void setImgpath(String imgpath) {
+        this.imgpath = imgpath;
     }
 
     public Integer getId() {

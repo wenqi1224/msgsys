@@ -14,8 +14,8 @@ import java.util.List;
 public class UserDaoImpl extends BaseDao implements UserDao {
     @Override
     public int insert(User user) {
-        String sql = "INSERT INTO T_user (username,password,email) VALUES ( ?, ?, ?)";
-        return update(sql,user.getUsername(),user.getPassword(),user.getEmail());
+        String sql = "INSERT INTO T_user (username,password,email,imgpath) VALUES ( ?, ?, ?, ?)";
+        return update(sql,user.getUsername(),user.getPassword(),user.getEmail(),user.getImgpath());
 
     }
 

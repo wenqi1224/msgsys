@@ -34,7 +34,7 @@
 <body>
 <div class="wrapper">
     <div class="title">欢迎注册</div>
-    <form action="<%=basePath%>user.do">
+    <form action="<%=basePath%>user.do" method="post" enctype="multipart/form-data">
         <%--隐藏域--%>
         <input name="action" type="hidden" value="register" />
         <div>
@@ -52,6 +52,9 @@
         <div>
             邮箱<span class="red">*</span>
             <span><input type="text" name="email" id="email"></span>
+        </div>
+        <div>
+             上传文件：<input name="file" type="file"><br>
         </div>
         <div>
             <span><button type="submit">注册</button></span>

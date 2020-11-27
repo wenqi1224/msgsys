@@ -1,11 +1,5 @@
 package com.servlet;
 
-import com.entity.Message;
-import com.entity.User;
-import com.service.MessageService;
-import com.service.impl.MessageServiceImpl;
-import com.utils.FileUtils;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,42 +7,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
-import java.util.List;
 
-/**
- * 作者：wenqi
- * 日期: 2020/11/26 21:59
- * 描述:
- */
-@WebServlet("/message.do")
-public class MessageServlet extends BaseServlet {
-
-    MessageService messageService =null;
-
-    public MessageServlet() {
-        messageService =new MessageServiceImpl();
+@WebServlet("/fileDownload")
+public class FileDownloadServlet extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doPost(req, resp);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        super.doGet(request,response);
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        super.doGet(request,response);
-    }
-
-    public void queryList(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-        User user= (User) request.getSession().getAttribute("user");
-//        String path = user.getImgpath();
-//        System.out.println(path);
-//        FileUtils.singleDownload(request,response,path,user.getUsername());
-        List<Message> messages=messageService.queryMessageByToUid(user.getId());
-        request.setAttribute("messages",messages);
-        System.out.println(messages);
-        request.getRequestDispatcher("/list.jsp").forward(request,response);
-
-
+        String path = request.getParameter("path");
+        download(request, response, path);
     }
 
 
@@ -81,7 +50,4 @@ public class MessageServlet extends BaseServlet {
         out.close();
         in.close();
     }
-
-
-
 }
