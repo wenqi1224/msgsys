@@ -53,7 +53,7 @@
             <span><input type="password" name="password" id="password"></span>
         </div>
             <div>
-                验证码：<img src="/t_11_19/Kaptcha.jpg"  style="vertical-align: top" width="100px">
+                验证码：<img src="/msgsys/Kaptcha.jpg"  style="vertical-align: top" width="100px">
                 <br/>
                 输入验证码：<input type="text" name="code">
             </div>
