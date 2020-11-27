@@ -52,6 +52,11 @@
             密码<span class="red">*</span>
             <span><input type="password" name="password" id="password"></span>
         </div>
+            <div>
+                验证码：<img src="/t_11_19/Kaptcha.jpg"  style="vertical-align: top" width="100px">
+                <br/>
+                输入验证码：<input type="text" name="code">
+            </div>
         <div>
             <span><button type="submit">登陆</button></span>
             <span><button type="button" onclick="toRegister()">注册</button></span>
