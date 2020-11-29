@@ -48,4 +48,10 @@ public class UserDaoImpl extends BaseDao implements UserDao {
         String sql = "SELECT * FROM t_user WHERE username= ? AND password =?";
         return queryForOne(User.class,sql,user.getUsername(),user.getPassword());
     }
+
+    @Override
+    public User queryUserByEmail(String email) {
+        String sql = "SELECT * FROM `T_user` WHERE  `email` = ?";
+        return queryForOne(User.class, sql, email);
+    }
 }

@@ -26,7 +26,7 @@ public class FileDownloadServlet extends HttpServlet {
         response.setContentType("text/html;charset=utf-8");
         request.setCharacterEncoding("utf-8");
         //设置文件名
-        String fileName = "惊喜.jpg";
+        String fileName = "惊.jpg";
         //将响应的类型设置为图片
         response.setContentType("image/jpeg");
         //金句：下载文件中文乱码解决

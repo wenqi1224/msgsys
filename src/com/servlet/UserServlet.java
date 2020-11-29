@@ -33,15 +33,13 @@ public class UserServlet extends BaseServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-
-
-        String action =request.getParameter("action");
-        if ("login".equals(action)){
-            login(request,response);
-        }else {
-            register(request,response);
-        }
-
+//        String action =request.getParameter("action");
+//        if ("login".equals(action)){
+//            login(request,response);
+//        }else {
+//            register(request,response);
+//        }
+        super.doPost(request,response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -51,6 +49,9 @@ public class UserServlet extends BaseServlet {
 
     //注册
     public void register(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //金句：防止中文乱码
+        response.setContentType("text/html;charset=utf-8");
+        request.setCharacterEncoding("utf-8");
 
 //        String username = request.getParameter("username");
 //        String password = request.getParameter("password");
@@ -82,19 +83,21 @@ public class UserServlet extends BaseServlet {
                         String str = fileItem.getFieldName();
                         switch (str) {
                             case "username":
-                                user.setUsername(fileItem.getString());
+                                user.setUsername(fileItem.getString("UTF-8"));
+
                                 break;
                             case "password":
-                                user.setPassword(fileItem.getString());
+                                user.setPassword(fileItem.getString("UTF-8"));
                                 break;
                             case "email":
-                                user.setEmail(fileItem.getString());
+                                user.setEmail(fileItem.getString("UTF-8"));
                                 break;
                         }
                     } else {
                         //上传的文件
                         System.out.println("表单项的name = " + fileItem.getFieldName());
                         System.out.println("上传的文件名:" + fileItem.getName());
+
                         StringBuilder sb = new StringBuilder("D:\\upload\\");
                         sb.append(new Date().getTime());
                         sb.append(fileItem.getName());
@@ -118,6 +121,9 @@ public class UserServlet extends BaseServlet {
     //登陆
     public void login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
+        //金句：防止中文乱码
+        response.setContentType("text/html;charset=utf-8");
+        request.setCharacterEncoding("utf-8");
         //获取验证码
         String token =(String) request.getSession().getAttribute(KAPTCHA_SESSION_KEY);
         String code =request.getParameter("code");

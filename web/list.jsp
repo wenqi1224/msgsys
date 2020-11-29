@@ -77,9 +77,8 @@
 <div class="wrapper">
     <div class="header">
         <div class="menu">
-            <div><img  src="/msgsys/fileDownload?path=<%=URLEncoder.encode(user.getImgpath(),"UTF-8") %>"/></div>
+            <div><img   src="/msgsys/fileDownload?path=<%=URLEncoder.encode(user.getImgpath(),"UTF-8") %>"/></div>
             <span>当前用户：<%= user.getUsername()%></span><span></span>
-            <p><%=user.getImgpath() %></p>
             <span><a href="#">发送消息</a><a href="logout.jsp">退出</a></span>
         </div>
     </div>
@@ -104,9 +103,9 @@
                         <%}%>
                     </span>
                 <span class="bordstyle"><%=message.getmTitle()%></span>
-                <span><a href="message.do?action=query&id=<%=message.getId()%>"><%=message.getmContent()%></a></span>
+                <span><a href="message.do?action=queryDetail&id=<%=message.getId()%>"><%=message.getmContent()%></a></span>
                 <span class="rfloat">
-                        <span><a href="#">删除</a></span>
+                        <span><a href="message.do?action=delete&id=<%=message.getId()%>">删除</a></span>
                         <span><a href="#">回信</a></span>
                         <span><%=message.getCreateTime()%></span>
                     </span>
