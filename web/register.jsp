@@ -46,7 +46,74 @@
                     $("#avatar-img").attr("src", fileReader.result);
                 };
             });
-            
+
+            $("#username").blur(function () {
+                var username = $("#username").val();
+                $.ajax({
+                    url: "http://localhost:8080/msgsys/user.do",//TODO:添加Servlet url-pattern
+                    data: {action: "queryUserByUsername", username: username},
+                    type: "GET",
+                    dataType: "text",//返回的数据类型
+                    success: function (data) {
+                        //data代表服务器回传的数据
+                        //console.log(data);
+                        var a="<font color=\"red\">用户名不可用</font>";
+                        //console.log(a);
+                       // console.log(a==data);
+                        if (a!=data){
+                            document.getElementById("submit").outerHTML="<button style='color: black' id=\"submit\" >注册</button>";
+                        }
+                        $("#usernameMsg").html(data);
+
+                    }
+                });
+            });
+
+            $("#email").blur(function () {
+                var email = $("#email").val();
+                $.ajax({
+                    url: "http://localhost:8080/msgsys/user.do",//TODO:添加Servlet url-pattern
+                    data: {action: "queryUserByEmail", email: email},
+                    type: "GET",
+                    dataType: "text",//返回的数据类型
+                    success: function (data) {
+                        //data代表服务器回传的数据
+                        var a="<font color=\"red\">email已存在</font>";
+                        if (a!=data){
+                           document.getElementById("submit").outerHTML="<button style='color: black' id=\"submit\" >注册</button>";
+                        }
+                       // console.log(data);
+                        $("#userEmailMsg").html(data);
+                    }
+                });
+            });
+
+            $("#submit").click(function () {
+                var username = $("#username").val();
+                var email = $("#email").val();
+                $.ajax({
+                    url: "http://localhost:8080/msgsys/user.do",//TODO:添加Servlet url-pattern
+                    data: {action: "submitjudge", email: email, username: username},
+                    type: "GET",
+                    dataType: "text",//返回的数据类型
+                    success: function (data) {
+                        var a="用户有重复";
+                        console.log(a==data);
+                        if (a==data){
+                            document.getElementById("submit").outerHTML="<span style='color: red' id=\"submit\" >注册</span>";
+                            $("#msgSubmit").html("修改信息后重新提交")
+                        } else {
+                            document.getElementById("submit").outerHTML="<button style='color: black' id=\"submit\" >注册</button>";
+                        }
+
+                    }
+
+
+                });
+
+            });
+
+
         })
 
 
@@ -60,7 +127,9 @@
 
         <div>
             用户名<span class="red">*</span>
-            <span><input type="text" name="username" id="username"></span>
+            <span><input type="text" name="username" id="username">
+            <span id="usernameMsg"></span>
+            </span>
         </div>
         <div>
             密码<span class="red">*</span>
@@ -72,7 +141,8 @@
         </div>
         <div>
             邮箱<span class="red">*</span>
-            <span><input type="text" name="email" id="email"></span>
+            <span><input type="text" name="email" id="email">
+            <span id="userEmailMsg"></span></span>
         </div>
 
 
@@ -86,7 +156,8 @@
         </div>
 
         <div>
-            <span><button type="submit">注册</button></span>
+            <span><button id="submit" type="submit">注册</button>
+            <span style="color: red" id="msgSubmit"></span></span>
         </div>
     </form>
 </div>

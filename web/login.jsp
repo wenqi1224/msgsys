@@ -30,7 +30,7 @@
             color: red;
         }
     </style>
-    
+
     <script type="text/javascript">
         function toRegister() {
             window.location.href="register.jsp";

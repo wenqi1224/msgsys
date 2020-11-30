@@ -27,4 +27,6 @@ public interface UserService {
 
     User queryUserByEmail(String email);
 
+    public User queryUserByUsername(String username);
+
 }

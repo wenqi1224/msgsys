@@ -1,6 +1,7 @@
 package com.servlet;
 
 import com.entity.User;
+import com.google.gson.Gson;
 import com.service.UserService;
 import com.service.impl.UserServiceImpl;
 import org.apache.commons.fileupload.FileItem;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 
@@ -83,6 +85,7 @@ public class UserServlet extends BaseServlet {
                         String str = fileItem.getFieldName();
                         switch (str) {
                             case "username":
+
                                 user.setUsername(fileItem.getString("UTF-8"));
 
                                 break;
@@ -93,15 +96,15 @@ public class UserServlet extends BaseServlet {
                                 user.setEmail(fileItem.getString("UTF-8"));
                                 break;
                         }
-                    } else {
+                    } else if (fileItem.getSize()>0){
                         //上传的文件
                         System.out.println("表单项的name = " + fileItem.getFieldName());
                         System.out.println("上传的文件名:" + fileItem.getName());
 
                         StringBuilder sb = new StringBuilder("D:\\upload\\");
-                        sb.append(new Date().getTime());
-                        sb.append(fileItem.getName());
+                        sb.append(new Date().getTime()).append(fileItem.getName());
                         String path = sb.toString();
+                        System.out.println(path);
                         user.setImgpath(path);
                         fileItem.write(new File(path));
                     }
@@ -110,9 +113,15 @@ public class UserServlet extends BaseServlet {
                 e.printStackTrace();
             }
 
-            System.out.println(user);
-            userService.register(user);
-            response.sendRedirect(request.getContextPath()+"/login.jsp");
+            if ("无重复用户".equals(message)){
+                System.out.println(user);
+                userService.register(user);
+                response.sendRedirect(request.getContextPath()+"/login.jsp");
+            }else {
+                response.sendRedirect(request.getContextPath()+"/register.jsp");
+            }
+
+
         }
     }
 
@@ -144,5 +153,45 @@ public class UserServlet extends BaseServlet {
         }
 
     }
+
+    //通过用户名查询用户
+    public void queryUserByUsername(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        //金句：防止中文乱码
+        response.setContentType("text/html;charset=utf-8");
+        request.setCharacterEncoding("utf-8");
+        String username = request.getParameter("username");
+        User user = userService.queryUserByUsername(username);
+        String message1 = (user == null) ? "<font color=\"green\">用户名可用</font>" : "<font color=\"red\">用户名不可用</font>";
+        response.getWriter().write(message1);
+    }
+
+    public void queryUserByEmail(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        //金句：防止中文乱码
+        response.setContentType("text/html;charset=utf-8");
+        request.setCharacterEncoding("utf-8");
+        String email = request.getParameter("email");
+        User user = userService.queryUserByEmail(email);
+        String message2 = (user == null) ? "<font color=\"green\">email可用</font>" : "<font color=\"red\">email已存在</font>";
+        response.getWriter().write(message2);
+    }
+
+    String message =null;
+
+    public void submitjudge(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        request.setCharacterEncoding("utf-8");
+        String username = request.getParameter("username");
+        String email = request.getParameter("email");
+        User user1 = userService.queryUserByUsername(username);
+        User user2 = userService.queryUserByEmail(email);
+        message = (user1==null&&user2==null)?"无重复用户":"用户有重复";
+        response.getWriter().write(message);
+
+
+    }
+
+
+
+
 
 }
